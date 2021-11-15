@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, InputGroup, Container, Col, Button } from "react-bootstrap";
+import { validate } from "./Validate";
 
 const SignUp = () => {
   const [data, setData] = useState({
@@ -9,6 +10,13 @@ const SignUp = () => {
     confirmPassword: "",
     isAccepted: false,
   });
+
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    setErrors(validate(data));
+    console.log(errors);
+  }, [data]);
 
   // * start change handler....
 
