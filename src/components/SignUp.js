@@ -163,6 +163,16 @@ const SignUp = () => {
                   isValid={!errors.isAccepted && touched.isAccepted}
                   onFocus={focusHandler}
                 />
+                <Form.Control.Feedback
+                  type="invalid"
+                  className={
+                    errors.isAccepted && touched.isAccepted ? "d-block" : ""
+                  }
+                >
+                  {errors.isAccepted && touched.isAccepted
+                    ? "please check"
+                    : "its OK!"}
+                </Form.Control.Feedback>
               </Form.Group>
             </InputGroup>
             {/* // !e-checkbox */}
