@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Form, InputGroup, Container, Col, Button } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
+import { notify } from "./Toast";
+import "react-toastify/dist/ReactToastify.css";
 import { validate } from "./Validate";
 
 const SignUp = () => {
@@ -12,11 +15,12 @@ const SignUp = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
 
   useEffect(() => {
     setErrors(validate(data));
     console.log(errors);
-  }, [data]);
+  }, [data, touched]);
 
   // * start change handler....
 
@@ -33,6 +37,34 @@ const SignUp = () => {
 
   // * end change handler....
 
+  // * start focus handler....
+
+  const focusHandler = (event) => {
+    setTouched({ ...touched, [event.target.name]: true });
+  };
+
+  // * end focus handler....
+
+  // * start submit handler....
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    if (!Object.keys(errors).length) {
+      notify("You signed in successfully", "success");
+    } else {
+      notify("invalid Data", "error");
+      setTouched({
+        name: true,
+        email: true,
+        password: true,
+        confirmPassword: true,
+        isAccepted: true,
+      });
+    }
+  };
+
+  // * end submit handler....
+
   return (
     <div>
       <Container className="d-flex justify-content-center mt-5">
@@ -45,7 +77,7 @@ const SignUp = () => {
           xl="6"
           xxl="6"
         >
-          <Form>
+          <Form onSubmit={submitHandler}>
             {/*// !s-name */}
             <InputGroup hasValidation className="mt-3">
               <InputGroup.Text>Name</InputGroup.Text>
@@ -53,11 +85,14 @@ const SignUp = () => {
                 type="text"
                 name="name"
                 value={data.name}
-                required
                 onChange={changeHandler}
+                // TODO:className={errors.name ? "is-invalid" : "is-valid"}
+                isValid={!errors.name && touched.name}
+                isInvalid={errors.name && touched.name}
+                onFocus={focusHandler}
               />
               <Form.Control.Feedback type="invalid">
-                Please choose a username.
+                {errors.name}
               </Form.Control.Feedback>
             </InputGroup>
             {/* // !e-name */}
@@ -68,11 +103,14 @@ const SignUp = () => {
                 type="email"
                 name="email"
                 value={data.email}
-                required
                 onChange={changeHandler}
+                // TODO:className={errors.email ? "is-invalid" : "is-valid"}
+                isValid={!errors.email && touched.email}
+                isInvalid={errors.email && touched.email}
+                onFocus={focusHandler}
               />
               <Form.Control.Feedback type="invalid">
-                Please choose a username.
+                {errors.email}
               </Form.Control.Feedback>
             </InputGroup>
             {/* // !e-Email */}
@@ -83,11 +121,14 @@ const SignUp = () => {
                 type="password"
                 name="password"
                 value={data.password}
-                required
                 onChange={changeHandler}
+                // TODO:className={errors.password ? "is-invalid" : "is-valid"}
+                isValid={!errors.password && touched.password}
+                isInvalid={errors.password && touched.password}
+                onFocus={focusHandler}
               />
               <Form.Control.Feedback type="invalid">
-                Please choose a username.
+                {errors.password}
               </Form.Control.Feedback>
             </InputGroup>
             {/* // !e-password */}
@@ -98,11 +139,14 @@ const SignUp = () => {
                 type="password"
                 name="confirmPassword"
                 value={data.confirmPassword}
-                required
                 onChange={changeHandler}
+                // TODO:className={errors.confirmPassword ? "is-invalid" : "is-valid"}
+                isValid={!errors.confirmPassword && touched.confirmPassword}
+                isInvalid={errors.confirmPassword && touched.confirmPassword}
+                onFocus={focusHandler}
               />
               <Form.Control.Feedback type="invalid">
-                Please choose a username.
+                {errors.confirmPassword}
               </Form.Control.Feedback>
             </InputGroup>
             {/* // !e-confirmPassword */}
@@ -115,6 +159,9 @@ const SignUp = () => {
                   value={data.isAccepted}
                   label="Check me out"
                   onChange={changeHandler}
+                  isInvalid={errors.isAccepted && touched.isAccepted}
+                  isValid={!errors.isAccepted && touched.isAccepted}
+                  onFocus={focusHandler}
                 />
               </Form.Group>
             </InputGroup>
@@ -129,6 +176,7 @@ const SignUp = () => {
             {/* // !e-buttons */}
           </Form>
         </Col>
+        <ToastContainer />
       </Container>
     </div>
   );
