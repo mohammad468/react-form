@@ -6,20 +6,17 @@ import "react-toastify/dist/ReactToastify.css";
 import { validate } from "./Validate";
 import { Link } from "react-router-dom";
 
-const SignUp = () => {
+const Login = () => {
   const [data, setData] = useState({
-    name: "",
     email: "",
     password: "",
-    confirmPassword: "",
-    isAccepted: false,
   });
 
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
   useEffect(() => {
-    setErrors(validate(data, "signup"));
+    setErrors(validate(data, "login"));
     console.log(errors);
   }, [data, touched]);
 
@@ -65,7 +62,6 @@ const SignUp = () => {
   };
 
   // * end submit handler....
-
   return (
     <div>
       <Container className="d-flex justify-content-center my-5">
@@ -78,34 +74,15 @@ const SignUp = () => {
           xl="6"
           xxl="6"
         >
-          <h1 className="text-primary text-center fw-bolder mb-5">Sign Up</h1>
+          <h1 className="text-primary text-center fw-bolder mb-5">Login</h1>
           <Form onSubmit={submitHandler}>
-            {/*// !s-name */}
-            <Form.Label>Name</Form.Label>
-            <InputGroup hasValidation className="">
-              <InputGroup.Text>enter your name</InputGroup.Text>
-              <Form.Control
-                type="text"
-                name="name"
-                value={data.name}
-                onChange={changeHandler}
-                // TODO:className={errors.name ? "is-invalid" : "is-valid"}
-                isValid={!errors.name && touched.name}
-                isInvalid={errors.name && touched.name}
-                onFocus={focusHandler}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.name}
-              </Form.Control.Feedback>
-            </InputGroup>
-            {/* // !e-name */}
             {/* // !s-Email */}
             <Form.Label className="mt-1">Email address</Form.Label>
             <InputGroup hasValidation className="">
-              <InputGroup.Text>Active email</InputGroup.Text>
               <Form.Control
                 type="email"
                 name="email"
+                placeholder="Enter Your Email"
                 value={data.email}
                 onChange={changeHandler}
                 // TODO:className={errors.email ? "is-invalid" : "is-valid"}
@@ -121,10 +98,10 @@ const SignUp = () => {
             {/* // !s-password */}
             <Form.Label className="mt-1">Password</Form.Label>
             <InputGroup hasValidation className="">
-              <InputGroup.Text>6 characters or more</InputGroup.Text>
               <Form.Control
                 type="password"
                 name="password"
+                placeholder="Enter Your Password"
                 value={data.password}
                 onChange={changeHandler}
                 // TODO:className={errors.password ? "is-invalid" : "is-valid"}
@@ -137,55 +114,10 @@ const SignUp = () => {
               </Form.Control.Feedback>
             </InputGroup>
             {/* // !e-password */}
-            {/* // !s-confirmPassword */}
-            <Form.Label className="mt-1">Confirm Password</Form.Label>
-            <InputGroup hasValidation className="">
-              <InputGroup.Text>Re-enter password</InputGroup.Text>
-              <Form.Control
-                type="password"
-                name="confirmPassword"
-                value={data.confirmPassword}
-                onChange={changeHandler}
-                // TODO:className={errors.confirmPassword ? "is-invalid" : "is-valid"}
-                isValid={!errors.confirmPassword && touched.confirmPassword}
-                isInvalid={errors.confirmPassword && touched.confirmPassword}
-                onFocus={focusHandler}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.confirmPassword}
-              </Form.Control.Feedback>
-            </InputGroup>
-            {/* // !e-confirmPassword */}
-            {/* // !s-checkbox */}
-            <InputGroup hasValidation className="my-3">
-              <Form.Group controlId="formBasicCheckbox">
-                <Form.Check
-                  type="checkbox"
-                  name="isAccepted"
-                  value={data.isAccepted}
-                  label="Accept our rules"
-                  onChange={changeHandler}
-                  isInvalid={errors.isAccepted && touched.isAccepted}
-                  isValid={!errors.isAccepted && touched.isAccepted}
-                  onFocus={focusHandler}
-                />
-                <Form.Control.Feedback
-                  type="invalid"
-                  className={
-                    errors.isAccepted && touched.isAccepted ? "d-block" : ""
-                  }
-                >
-                  {errors.isAccepted && touched.isAccepted
-                    ? "please check"
-                    : "its OK!"}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </InputGroup>
-            {/* // !e-checkbox */}
             {/* // !s-buttons */}
-            <div className="d-grid gap-2">
+            <div className="d-grid gap-2 mt-4">
               <Button variant="primary" className="rounded" type="submit">
-                SignUp
+                Login
               </Button>
               <span className="text-center txt1 d-block my-2">or</span>
             </div>
@@ -208,9 +140,9 @@ const SignUp = () => {
           {/* // !end login with */}
           {/* // !start signUp */}
           <div class="">
-            <span class="txt1 d-block mt-2 text-center">Or Login Using</span>
-            <Link to="/login" class="txt2 d-block mt-2 text-center">
-              Login
+            <span class="txt1 d-block mt-2 text-center">Or Sign Up Using</span>
+            <Link to="/signup" class="txt2 d-block mt-2 text-center">
+              Sign Up
             </Link>
           </div>
           {/* // !end signUp */}
@@ -221,4 +153,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;
